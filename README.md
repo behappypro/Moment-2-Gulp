@@ -3,6 +3,8 @@
 Detta moment bygger på automatisering genom GULP.
 Automatisering är att vi skriver kod för att datorn skall utföra vissa task åt oss automatiskt. Detta är praktiskt om vi exempelvis vill att alla bilder skall komprimeras utan att vi gör någonting. Då kan vi installera en metod som automatiserar denna process åt oss. 
 
+OBS! Många av de funktioner som använts är tagna från föreläsningen för Moment 2.
+
 Detta GULP-moment Innehåller följande paket:
 
 * gulp-concat
@@ -59,21 +61,10 @@ function jsTask(){
     .pipe(dest('pub/js'));
 }
 ```
-### Extra funktion
-
-Denna funktion lades till som extra för att testa hur komprimering av bilder kan användas.
-
-```
-function imageTask(){
-    return src(files.imagePath)
-    // Komprimerar bilder
-    .pipe(imagemin())
-    .pipe(dest('pub/images'));
-}
-```
 
 ```
 function watchTask(){
+    // Event som lyssnar efter uppdatering
     livereload.listen();
     // Håller koll på våra filer och känner av när något ändras
     watch([files.htmlPath,files.cssPath,files.jsPath,files.imagePath],copyHTML,cssTask,jsTask,imageTask);
@@ -86,6 +77,19 @@ exports.default = series(
     parallel(copyHTML,cssTask,jsTask,imageTask),
     watchTask
 );
+```
+
+### Extra funktion
+
+Denna funktion lades till som extra för att testa hur komprimering av bilder kan användas.
+
+```
+function imageTask(){
+    return src(files.imagePath)
+    // Komprimerar bilder
+    .pipe(imagemin())
+    .pipe(dest('pub/images'));
+}
 ```
 
 ### Installation
