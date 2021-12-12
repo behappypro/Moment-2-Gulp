@@ -3,7 +3,7 @@ const concat = require('gulp-concat');
 const terser = require('gulp-terser');
 const cssnano = require('gulp-cssnano');
 const imagemin = require('gulp-imagemin');
-const livereload = require('gulp-livereload');
+const browserSync = require('browser-sync').create();
 
 // Sökvägar
 
@@ -22,7 +22,7 @@ function copyHTML(){
     // Metod för att skriva till pub mappen
     .pipe(dest('pub'))
     // Metod för att ladda om browsern
-    .pipe(livereload());
+    .pipe(browserSync.stream())
 }
 
 // CSS task
@@ -35,6 +35,7 @@ function cssTask(){
     .pipe(cssnano())
     // Skriver nya filerna till css mappen
     .pipe(dest('pub/css'))
+    .pipe(browserSync.stream())
 }
 
 // JS task
@@ -44,21 +45,27 @@ function jsTask(){
     .pipe(concat('main.js'))
     // Minify JS genom att tag bort onödiga rader och kommentarer
     .pipe(terser())
-    .pipe(dest('pub/js'));
+    .pipe(dest('pub/js'))
+    .pipe(browserSync.stream())
 }
 // Image task
 function imageTask(){
     return src(files.imagePath)
     // Komprimerar bilder
     .pipe(imagemin())
-    .pipe(dest('pub/images'));
+    .pipe(dest('pub/images'))
+    .pipe(browserSync.stream())
 }
 
 // Watch  task
 function watchTask(){
-    livereload.listen();
+    browserSync.init({
+        server: {
+            baseDir: 'pub/'
+        }
+    });
     // Håller koll på våra filer och känner av när något ändras
-    watch([files.htmlPath,files.cssPath,files.jsPath,files.imagePath],copyHTML,cssTask,jsTask,imageTask);
+    watch([files.htmlPath,files.cssPath,files.jsPath,files.imagePath],parallel(copyHTML,cssTask,jsTask,imageTask)).on('change', browserSync.reload);
 }
 
 
