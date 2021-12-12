@@ -11,7 +11,7 @@ Detta GULP-moment Innehåller följande paket:
 * gulp-terser
 * gulp-cssnano
 * gulp-imagemin
-* gulp-livereload
+* gulp-browser-sync
 
 Jag har valt dessa paket för vissa av dessa paket var som krav för uppgiften men andra lades till för utforska mer med vad gulp kunde automatisera.
 
