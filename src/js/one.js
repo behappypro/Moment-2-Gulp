@@ -1,2 +1,6 @@
 // Testkommentar
-console.log("Hello from One.js");
+const person = {
+    name: 'Ashraf Hamadi'
+  };
+  
+  const testString = `Mitt namn är:  ${person.name}`;

@@ -4,6 +4,7 @@ const terser = require('gulp-terser');
 const cssnano = require('gulp-cssnano');
 const imagemin = require('gulp-imagemin');
 const browserSync = require('browser-sync').create();
+const babel = require('gulp-babel');
 
 // Sökvägar
 
@@ -45,6 +46,9 @@ function jsTask(){
     .pipe(concat('main.js'))
     // Minify JS genom att tag bort onödiga rader och kommentarer
     .pipe(terser())
+    .pipe(babel({
+        presets: ['es2015']
+    }))
     .pipe(dest('pub/js'))
     .pipe(browserSync.stream())
 }

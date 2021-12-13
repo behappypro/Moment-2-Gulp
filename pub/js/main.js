@@ -1,1 +1,5 @@
-console.log("Hello from One.js"),console.log("Hello from two.js");
+"use strict";
+
+var person = { name: "Ashraf Hamadi" },
+    testString = "Mitt namn \xE4r:  " + person.name;
+    console.log("Hello from two.js");
